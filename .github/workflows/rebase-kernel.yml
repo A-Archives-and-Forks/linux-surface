@@ -39,15 +39,17 @@ jobs:
           remove-haskell: true
 
       - name: Checkout linux-surface repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: linux-surface
 
-      - name: Clone kernel repository
-        env:
-          KERNEL_BRANCH: ${{ inputs.branch }}
-        run: |
-          git clone --branch="${KERNEL_BRANCH}" https://github.com/linux-surface/kernel kernel
+      - name: Checkout kernel repository
+        uses: actions/checkout@v6
+        with:
+          repository: linux-surface/kernel
+          path: kernel
+          ref: ${{ inputs.branch }}
+          fetch-depth: 0
 
       - name: Install build dependencies
         run: |
